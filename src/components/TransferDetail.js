@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Text, View, StyleSheet, Dimensions, Button } from "react-native";
-import numeral from "numeral";
+import formatCurrency from "../helper/formatCurrency";
 
 export default class TransferDetail extends Component {
   render() {
@@ -21,7 +21,7 @@ export default class TransferDetail extends Component {
         <Text style={styles.textValue}>{data.account_number}</Text>
         <Text style={styles.textLabel}>Investing amount</Text>
         <Text style={[styles.textValue, { marginBottom: 50 }]}>
-          Rp {numeral(data.total).format("0,0")}
+          {formatCurrency(data.total)}
         </Text>
         <Button title="SEND PAYMENT VERIFICATION" color="#0E70CD" />
       </View>

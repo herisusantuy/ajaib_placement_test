@@ -5,7 +5,7 @@ export default class Advisor extends Component {
   render() {
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <Text>Advisor</Text>
+        <Text>Advisor Page</Text>
       </View>
     );
   }

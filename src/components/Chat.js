@@ -5,7 +5,7 @@ export default class Chat extends Component {
   render() {
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <Text>Chat</Text>
+        <Text>Chat Page</Text>
       </View>
     );
   }

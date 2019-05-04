@@ -2,21 +2,36 @@ import React, { Component } from "react";
 import {
   Text,
   View,
-  Button,
   Dimensions,
   StyleSheet,
   TouchableOpacity
 } from "react-native";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import numeral from "numeral";
+import formatCurrency from "../helper/formatCurrency";
 
 export default class Invest extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.state = {
+      isDeposit: true,
+      isWithdraw: true
+    };
+    this.handleDeposit = this.handleDeposit.bind(this);
+    this.handleWithdraw = this.handleWithdraw.bind(this);
   }
+  handleDeposit = () => {
+    this.props.navigation.navigate("Deposit");
+    this.setState({
+      isDeposit: !this.state.isDeposit
+    });
+  };
+  handleWithdraw = () => {
+    this.setState({
+      isWithdraw: !this.state.isWithdraw
+    });
+  };
 
   render() {
     let data = [
@@ -65,7 +80,7 @@ export default class Invest extends Component {
           <View style={styles.list}>
             <View style={styles.detail}>
               <Text style={styles.title}>
-                {datum.type} Rp {numeral(datum.total).format("0,0")}
+                {datum.type} {formatCurrency(datum.total)}
               </Text>
               <Text>To {datum.to}</Text>
               <Text style={styles.date}>{datum.date}</Text>
@@ -97,7 +112,7 @@ export default class Invest extends Component {
               <Text style={styles.title}>
                 {datum.type} {datum.to}
               </Text>
-              <Text>Rp {numeral(datum.total).format("0,0")}</Text>
+              <Text> {formatCurrency(datum.total)}</Text>
               <Text style={styles.date}>{datum.date}</Text>
             </View>
             <View style={styles.function}>
@@ -119,11 +134,13 @@ export default class Invest extends Component {
 
     return (
       <View style={styles.container}>
-        <TouchableOpacity
-          onPress={() => this.props.navigation.navigate("Deposit")}
-        >
+        <TouchableOpacity onPress={() => this.handleDeposit()}>
           <View style={{ marginBottom: 15, flexDirection: "row" }}>
-            <AntDesign name="pluscircleo" size={20} color="#0065ff" />
+            <AntDesign
+              name={this.state.isDeposit ? "pluscircleo" : "minuscircleo"}
+              size={20}
+              color="#0065ff"
+            />
             <Text
               style={{
                 fontSize: 18,
@@ -136,19 +153,25 @@ export default class Invest extends Component {
             </Text>
           </View>
         </TouchableOpacity>
-        <View style={{ marginBottom: 15, flexDirection: "row" }}>
-          <AntDesign name="minuscircleo" size={20} color="#0065ff" />
-          <Text
-            style={{
-              fontSize: 18,
-              fontWeight: "bold",
-              paddingHorizontal: 10,
-              top: -3
-            }}
-          >
-            Withdraw
-          </Text>
-        </View>
+        <TouchableOpacity onPress={() => this.handleWithdraw()}>
+          <View style={{ marginBottom: 15, flexDirection: "row" }}>
+            <AntDesign
+              name={this.state.isWithdraw ? "pluscircleo" : "minuscircleo"}
+              size={20}
+              color="#0065ff"
+            />
+            <Text
+              style={{
+                fontSize: 18,
+                fontWeight: "bold",
+                paddingHorizontal: 10,
+                top: -3
+              }}
+            >
+              Withdraw
+            </Text>
+          </View>
+        </TouchableOpacity>
         <View style={styles.line}>
           <View style={{ flexDirection: "row", marginBottom: 10 }}>
             <MaterialIcons name="cached" size={30} color="black" />

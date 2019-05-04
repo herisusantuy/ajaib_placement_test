@@ -5,7 +5,7 @@ export default class Settings extends Component {
   render() {
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <Text>Settings</Text>
+        <Text>Settings Page</Text>
       </View>
     );
   }

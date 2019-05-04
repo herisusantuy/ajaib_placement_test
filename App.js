@@ -213,12 +213,11 @@ const TabNavigator = createBottomTabNavigator(
     }
   },
   {
-    navigationOptions: ({ navigation }) => {
-      const { routeName } = navigation.state.routes[navigation.state.index];
-      return {
-        header: null,
-        headerTitle: routeName
-      };
+    tabBarOptions: {
+      style: {
+        backgroundColor: "white",
+        elevation: 30
+      }
     }
   }
 );
@@ -227,21 +226,7 @@ const StackNavigator = createStackNavigator(
     TabNavigator: TabNavigator
   },
   {
-    defaultNavigationOptions: {
-      headerStyle: {
-        backgroundColor: "#0E70CD"
-      },
-      headerTintColor: "#fff",
-      headerTitleStyle: {
-        fontWeight: "bold",
-        fontSize: 24,
-        alignSelf: "center",
-        textAlign: "center",
-        justifyContent: "center",
-        flex: 1,
-        textAlignVertical: "center"
-      }
-    }
+    headerMode: "none"
   }
 );
 
