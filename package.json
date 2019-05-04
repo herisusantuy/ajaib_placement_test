@@ -10,6 +10,7 @@
     "accordion-collapse-react-native": "^0.1.9",
     "link": "^0.1.5",
     "moment": "^2.24.0",
+    "native-base": "^2.12.1",
     "numeral": "^2.0.6",
     "react": "16.8.3",
     "react-native": "^0.59.6",

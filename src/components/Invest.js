@@ -8,6 +8,12 @@ import {
 } from "react-native";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import {
+  Collapse,
+  CollapseHeader,
+  CollapseBody
+} from "accordion-collapse-react-native";
+import { Thumbnail, List, ListItem, Separator } from "native-base";
 import formatCurrency from "../helper/formatCurrency";
 
 export default class Invest extends Component {
@@ -16,7 +22,8 @@ export default class Invest extends Component {
 
     this.state = {
       isDeposit: true,
-      isWithdraw: true
+      isWithdraw: true,
+      isCollapsed: false
     };
     this.handleDeposit = this.handleDeposit.bind(this);
     this.handleWithdraw = this.handleWithdraw.bind(this);
@@ -29,7 +36,8 @@ export default class Invest extends Component {
   };
   handleWithdraw = () => {
     this.setState({
-      isWithdraw: !this.state.isWithdraw
+      isWithdraw: !this.state.isWithdraw,
+      isCollapsed: !this.state.isCollapsed
     });
   };
 
@@ -103,6 +111,7 @@ export default class Invest extends Component {
           </View>
         );
       });
+
     let dataComplete = data
       .filter(trans => trans.status === "Completed Orders")
       .map((datum, i) => {
@@ -112,7 +121,7 @@ export default class Invest extends Component {
               <Text style={styles.title}>
                 {datum.type} {datum.to}
               </Text>
-              <Text> {formatCurrency(datum.total)}</Text>
+              <Text>{formatCurrency(datum.total)}</Text>
               <Text style={styles.date}>{datum.date}</Text>
             </View>
             <View style={styles.function}>
@@ -141,51 +150,52 @@ export default class Invest extends Component {
               size={20}
               color="#0065ff"
             />
-            <Text
-              style={{
-                fontSize: 18,
-                fontWeight: "bold",
-                paddingHorizontal: 10,
-                top: -3
-              }}
-            >
-              Deposit
-            </Text>
+            <Text style={styles.styleBtn}>Deposit</Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => this.handleWithdraw()}>
-          <View style={{ marginBottom: 15, flexDirection: "row" }}>
-            <AntDesign
-              name={this.state.isWithdraw ? "pluscircleo" : "minuscircleo"}
-              size={20}
-              color="#0065ff"
-            />
-            <Text
+        <Collapse
+          isCollapsed={this.state.isCollapsed}
+          onToggle={() => this.handleWithdraw()}
+        >
+          <CollapseHeader>
+            <Separator
+              bordered
               style={{
-                fontSize: 18,
-                fontWeight: "bold",
-                paddingHorizontal: 10,
-                top: -3
+                backgroundColor: "white",
+                flexDirection: "column",
+                borderTopColor: "white"
               }}
             >
-              Withdraw
-            </Text>
-          </View>
-        </TouchableOpacity>
-        <View style={styles.line}>
-          <View style={{ flexDirection: "row", marginBottom: 10 }}>
-            <MaterialIcons name="cached" size={30} color="black" />
-            <Text style={styles.textIcon}>Pending Orders</Text>
-          </View>
-          {dataPending}
-        </View>
-        <View style={styles.line}>
-          <View style={{ flexDirection: "row", marginBottom: 10 }}>
-            <MaterialIcons name="playlist-add-check" size={30} color="black" />
-            <Text style={styles.textIcon}>Completed Orders</Text>
-          </View>
-          <View>{dataComplete}</View>
-        </View>
+              <AntDesign
+                name={this.state.isWithdraw ? "pluscircleo" : "minuscircleo"}
+                size={20}
+                color="#0065ff"
+                style={{ left: -17 }}
+              />
+              <Text style={[styles.styleBtn, { left: 3, top: -24 }]}>
+                Withdraw
+              </Text>
+            </Separator>
+          </CollapseHeader>
+          <CollapseBody>
+            <View style={styles.line}>
+              <View style={styles.headerBody}>
+                <MaterialIcons name="cached" size={30} color="black" />
+                <Text style={styles.textIcon}>Pending Orders</Text>
+              </View>
+              {dataPending}
+              <View style={styles.headerBody}>
+                <MaterialIcons
+                  name="playlist-add-check"
+                  size={30}
+                  color="black"
+                />
+                <Text style={styles.textIcon}>Completed Orders</Text>
+              </View>
+              {dataComplete}
+            </View>
+          </CollapseBody>
+        </Collapse>
       </View>
     );
   }
@@ -230,6 +240,17 @@ const styles = StyleSheet.create({
     padding: 3
   },
   line: {
+    paddingTop: 15
+  },
+  styleBtn: {
+    fontSize: 18,
+    fontWeight: "bold",
+    paddingHorizontal: 10,
+    top: -3
+  },
+  headerBody: {
+    flexDirection: "row",
+    marginBottom: 10,
     borderTopColor: "#bfbfbf",
     borderTopWidth: 3,
     paddingTop: 15

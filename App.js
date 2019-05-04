@@ -216,7 +216,7 @@ const TabNavigator = createBottomTabNavigator(
     tabBarOptions: {
       style: {
         backgroundColor: "white",
-        elevation: 30
+        elevation: 20
       }
     }
   }
