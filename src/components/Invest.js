@@ -4,7 +4,8 @@ import {
   View,
   Dimensions,
   StyleSheet,
-  TouchableOpacity
+  TouchableOpacity,
+  ScrollView
 } from "react-native";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
@@ -13,7 +14,7 @@ import {
   CollapseHeader,
   CollapseBody
 } from "accordion-collapse-react-native";
-import { Thumbnail, List, ListItem, Separator } from "native-base";
+import { Separator } from "native-base";
 import formatCurrency from "../helper/formatCurrency";
 
 export default class Invest extends Component {
@@ -163,7 +164,8 @@ export default class Invest extends Component {
               style={{
                 backgroundColor: "white",
                 flexDirection: "column",
-                borderTopColor: "white"
+                borderTopColor: "white",
+                borderBottomColor: "white"
               }}
             >
               <AntDesign
@@ -178,22 +180,27 @@ export default class Invest extends Component {
             </Separator>
           </CollapseHeader>
           <CollapseBody>
-            <View style={styles.line}>
-              <View style={styles.headerBody}>
-                <MaterialIcons name="cached" size={30} color="black" />
-                <Text style={styles.textIcon}>Pending Orders</Text>
+            <ScrollView
+              showsVerticalScrollIndicator={false}
+              style={{ marginBottom: 60 }}
+            >
+              <View style={styles.line}>
+                <View style={styles.headerBody}>
+                  <MaterialIcons name="cached" size={30} color="black" />
+                  <Text style={styles.textIcon}>Pending Orders</Text>
+                </View>
+                {dataPending}
+                <View style={styles.headerBody}>
+                  <MaterialIcons
+                    name="playlist-add-check"
+                    size={30}
+                    color="black"
+                  />
+                  <Text style={styles.textIcon}>Completed Orders</Text>
+                </View>
+                {dataComplete}
               </View>
-              {dataPending}
-              <View style={styles.headerBody}>
-                <MaterialIcons
-                  name="playlist-add-check"
-                  size={30}
-                  color="black"
-                />
-                <Text style={styles.textIcon}>Completed Orders</Text>
-              </View>
-              {dataComplete}
-            </View>
+            </ScrollView>
           </CollapseBody>
         </Collapse>
       </View>
@@ -201,7 +208,7 @@ export default class Invest extends Component {
   }
 }
 
-const { width, height } = Dimensions.get("window");
+const { width } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
   container: {
@@ -214,7 +221,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     justifyContent: "space-between",
-    marginBottom: 80
+    marginBottom: 20
   },
   detail: {
     flex: 2
