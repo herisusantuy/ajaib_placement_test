@@ -18,6 +18,7 @@ import TransferDetail from "./src/components/TransferDetail";
 
 class App extends Component {
   render() {
+    // console.disableYellowBox = true;
     return <AppContainer />;
   }
 }
